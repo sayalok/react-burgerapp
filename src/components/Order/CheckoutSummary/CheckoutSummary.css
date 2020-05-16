@@ -1,0 +1,10 @@
+.ChechoutSummary {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+@media (min-width: 600px) {
+    .ChechoutSummary {
+        width: 500px;
+    }
+}
