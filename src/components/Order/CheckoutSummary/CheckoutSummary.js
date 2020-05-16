@@ -6,10 +6,9 @@ import './CheckoutSummary.css'
 
 
 const ChechoutSummary = (props) => {
-    console.log(props)
     return (
         <div className="ChechoutSummary">
-            <h1>bla bla bla</h1>
+            <h1>Confirm Your Order</h1>
             <div style={{width: '100%', margin: 'auto'}}>
                 <Burger ingredients={props.ingredients}/>
             </div>
