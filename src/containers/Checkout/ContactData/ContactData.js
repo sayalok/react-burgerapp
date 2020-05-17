@@ -9,49 +9,26 @@ import Input from "../../../components/UI/Input/Input";
 
 class ContactData extends Component {
 
+    inputMaking(lbl, elmType, inpType, inpPlacHoldr, val) {
+        return {
+            label: lbl,
+            elementType: elmType,
+            elementConfig: {
+                type: inpType,
+                placeholder: inpPlacHoldr
+            },
+            value: val
+        }
+    }
     state = {
         orderForm: {
-            name: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Enter Your Name'
-                },
-                value: ''
-            },
-            street: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Enter Your Street'
-                },
-                value: ''
-            },
-            zip: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Enter Your ZipCode'
-                },
-                value: ''
-            },
-            country: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Enter Your Country'
-                },
-                value: ''
-            },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'Enter Your Email'
-                },
-                value: ''
-            },
+            name: this.inputMaking('Enter your name','input','text','Enter Your Name',''),
+            street: this.inputMaking('Enter your Street','input','text','Enter Your Street',''),
+            zip: this.inputMaking('Enter your Zip','input','text','Enter Your Zip',''),
+            country: this.inputMaking('Enter your Country','input','text','Enter Your Country',''),
+            email: this.inputMaking('Enter your Email','input','text','Enter Your email',''),
             deliverMethod: {
+                label: 'Enter Delivery Method',
                 elementType: 'select',
                 elementConfig: {
                     options: [
@@ -92,11 +69,14 @@ class ContactData extends Component {
         }
 
         let formInput = formElmArray.map((inputItem) => {
-            return <Input 
-                key={inputItem.id}
-                elementType={inputItem.config.type} 
-                elementConfig={inputItem.config.elementConfig} 
-                value={inputItem.config.value}/>
+            return (
+
+                <Input 
+                    key={inputItem.id}
+                    elementType={inputItem.config.elementType} 
+                    elementConfig={inputItem.config.elementConfig} 
+                    value={inputItem.config.value}/>
+            )
         })
         let form = (
             <form>
