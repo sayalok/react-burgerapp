@@ -9,7 +9,8 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <select 
-                        className="InputElement" 
+                        className="InputElement"
+                        onChange={props.changed}
                         value={props.value}>
                         {props.elementConfig.options.map(item => (
                             <option key={item.value} value={item.value}>{item.displayValue}</option>
@@ -23,7 +24,8 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <input 
-                        className="InputElement" 
+                        className="InputElement"
+                        onChange={props.changed}
                         {...props.elementConfig} 
                         value={props.value}/>
                 </div>
@@ -34,7 +36,8 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <textarea 
-                    className="InputElement" 
+                    className="InputElement"
+                    onChange={props.changed}
                     {...props.elementConfig} 
                     value={props.value}/>
                 </div>
@@ -46,7 +49,8 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <input 
-                        className="InputElement" 
+                        className="InputElement"
+                        onChange={props.changed}
                         {...props.elementConfig} 
                         value={props.value}/>
                 </div>
