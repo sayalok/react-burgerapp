@@ -11,17 +11,9 @@ import WithErrorHandler from '../../hoc/withErrorHandler/WithErrorHandler';
 import * as actionTypes from "../../store/actions";
 
 
-const INGREDIENTS_PRICES = {
-    salad: 0.5,
-    bacon: 0.4,
-    cheese: 0.7,
-    meat: 1.3
-};
-
 class BurgerBuilder extends Component {
 
     state = {
-        totalPrice: 4,
         purchasable: false,
         purchasing: false,
         loading: false,
@@ -51,44 +43,44 @@ class BurgerBuilder extends Component {
         this.setState( { purchasable: sum > 0 } );
     }
 
-    addIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type];
-        const updatedCount = oldCount + 1;
+    // addIngredientHandler = (type) => {
+    //     const oldCount = this.state.ingredients[type];
+    //     const updatedCount = oldCount + 1;
 
-        const updatedIngreditents = {
-            ...this.state.ingredients
-        }
+    //     const updatedIngreditents = {
+    //         ...this.state.ingredients
+    //     }
 
-        updatedIngreditents[type] = updatedCount;
+    //     updatedIngreditents[type] = updatedCount;
 
-        const priceAddition = INGREDIENTS_PRICES[type]
-        const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice + priceAddition;
+    //     const priceAddition = INGREDIENTS_PRICES[type]
+    //     const oldPrice = this.state.totalPrice;
+    //     const newPrice = oldPrice + priceAddition;
 
-        this.setState({totalPrice:newPrice,ingredients: updatedIngreditents});
-        this.updatePurchaseState(updatedIngreditents);
-    }
+    //     this.setState({totalPrice:newPrice,ingredients: updatedIngreditents});
+    //     this.updatePurchaseState(updatedIngreditents);
+    // }
 
-    removeIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type];
-        if(oldCount <= 0) {
-            return;
-        }
-        const updatedCount = oldCount - 1;
+    // removeIngredientHandler = (type) => {
+    //     const oldCount = this.state.ingredients[type];
+    //     if(oldCount <= 0) {
+    //         return;
+    //     }
+    //     const updatedCount = oldCount - 1;
 
-        const updatedIngreditents = {
-            ...this.state.ingredients
-        }
+    //     const updatedIngreditents = {
+    //         ...this.state.ingredients
+    //     }
 
-        updatedIngreditents[type] = updatedCount;
+    //     updatedIngreditents[type] = updatedCount;
 
-        const priceDEdution = INGREDIENTS_PRICES[type]
-        const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice - priceDEdution;
+    //     const priceDEdution = INGREDIENTS_PRICES[type]
+    //     const oldPrice = this.state.totalPrice;
+    //     const newPrice = oldPrice - priceDEdution;
 
-        this.setState({totalPrice:newPrice,ingredients: updatedIngreditents});
-        this.updatePurchaseState(updatedIngreditents);
-    }
+    //     this.setState({totalPrice:newPrice,ingredients: updatedIngreditents});
+    //     this.updatePurchaseState(updatedIngreditents);
+    // }
 
     puchaseHandler = () => {
         this.setState({purchasing: true})
@@ -135,13 +127,13 @@ class BurgerBuilder extends Component {
                         disabled={disabledInfo}
                         purchaseable= {this.state.purchasable}
                         ordered={this.puchaseHandler}
-                        price={this.state.totalPrice}/>
+                        price={this.props.price}/>
                 </Aux>
             )
 
             orderSummary = <OrderSummary 
                 ingredients={this.props.ings}
-                price={this.state.totalPrice.toFixed(2)}
+                price={this.props.price.toFixed(2)}
                 puchaseCancel={this.puchaseCancelHandler}
                 puchasedContinue={this.puchasedContinueHandler}
             />
@@ -165,7 +157,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients
+        ings: state.ingredients,
+        price: state.totalPrice
     }
 }
 
