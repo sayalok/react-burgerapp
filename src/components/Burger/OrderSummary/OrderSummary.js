@@ -1,30 +1,32 @@
-import React from "react";
-import Aux from "../../../hoc/Aux/Aux";
-import Button from "../../UI/Button/Button";
+import React from 'react';
+import Aux from '../../../hoc/Aux/Aux'
+import Button from '../../UI/Button/Button'
 
 const OrderSummary = (props) => {
-        const ingredients = Object.keys(props.ingredients)
-        .map(igKey => {
-            return (
-                <li key={igKey}>
-                    <span>{igKey}: </span>
-                    {props.ingredients[igKey]}
-                </li>
-            )
-        })
-        return (
-            <Aux>
-                <h2>Your Order</h2>
-                <p>Your Items:</p>
-                <ul>
-                    {ingredients}
-                </ul>
-                <p><strong>Total Price: </strong> {props.price}</p>
-                <p>Continue To Checkout</p>
-                <Button btnType="Danger" clicked={props.puchaseCancel}>Cancel</Button>
-                <Button btnType="Success" clicked={props.puchasedContinue}>Continue</Button>
-            </Aux>
-        )
-}
-
-export default OrderSummary;
+    const ingredientsSummary = Object.keys(props.ingredients)
+                .map(key => {
+                    return (
+                        <li key={key}>
+                            <span style={{textTransform: "uppercase"}}>{key}</span> 
+                            : 
+                            {props.ingredients[key]}
+                        </li>
+                    )
+                })
+    return (
+        <Aux>
+            <h3>Your Order</h3>
+            <ul>
+                {ingredientsSummary}
+            </ul>
+            <p>
+                <strong>Total Price: </strong> 
+                {props.totalPrice}
+            </p>
+            <p>Continue Tto checkout?</p>
+            <Button btnType="Danger" clicked={props.purchaseCancel}>Cancel</Button>
+            <Button btnType="Success" clicked={props.purchaseContinue}>Continue</Button>
+        </Aux>
+    );
+};
+export default OrderSummary

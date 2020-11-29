@@ -3,13 +3,19 @@ import './Input.css';
 
 const Input = (props) => {
     let inputElement = null;
+    let InputClasses = ['InputElement']
+
+    if (props.inValid && props.shouldValidate && props.touched) {
+        InputClasses.push("Invalid")
+    }
+
     switch(props.elementType) {
         case('select') :
             inputElement = (
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <select 
-                        className="InputElement"
+                        className={InputClasses.join(" ")}
                         onChange={props.changed}
                         value={props.value}>
                         {props.elementConfig.options.map(item => (
@@ -24,7 +30,7 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <input 
-                        className="InputElement"
+                        className={InputClasses.join(" ")}
                         onChange={props.changed}
                         {...props.elementConfig} 
                         value={props.value}/>
@@ -36,7 +42,7 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <textarea 
-                    className="InputElement"
+                    className={InputClasses.join(" ")}
                     onChange={props.changed}
                     {...props.elementConfig} 
                     value={props.value}/>
@@ -49,7 +55,7 @@ const Input = (props) => {
                 <div className="Input">
                     <label className="Label">{props.label}</label>
                     <input 
-                        className="InputElement"
+                        className={InputClasses.join(" ")}
                         onChange={props.changed}
                         {...props.elementConfig} 
                         value={props.value}/>

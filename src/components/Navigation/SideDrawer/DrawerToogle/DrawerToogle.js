@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from 'react';
 import './DrawerToogle.css'
 
 const DrawerToogle = (props) => (
@@ -7,6 +7,6 @@ const DrawerToogle = (props) => (
         <div></div>
         <div></div>
     </div>
-)
+);
 
-export default DrawerToogle;
+export default DrawerToogle
