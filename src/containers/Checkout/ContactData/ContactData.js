@@ -75,15 +75,7 @@ class ContactData extends Component {
             price: this.props.price.toFixed(2),
             orderData: formData
         }
-        this.props.onOrderBurger(order)
-        // axios.post('/orders.json', order)
-        //     .then(res => {
-        //         this.setState({loading: false});
-        //         this.props.history.push('/');
-        //     })
-        //     .catch(err => {
-        //         this.setState({loading: false});
-        //     })
+        this.props.onOrderBurger(order, this.props.token)
     }
 
     inputChangedHandler = (e, inputIdentifier) => {
@@ -153,13 +145,14 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.price,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProp = dispatch => {
     return {
-        onOrderBurger: orderdata => dispatch(orderActions.purchaseBurger(orderdata))
+        onOrderBurger: (orderdata,token) => dispatch(orderActions.purchaseBurger(orderdata,token))
     }
 }
 

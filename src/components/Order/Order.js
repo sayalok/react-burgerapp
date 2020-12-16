@@ -10,8 +10,6 @@ const Order = (props) => {
         })
     }
     const ingredientsOutput = ingredients.map(item => {
-        console.log(item.name)
-        console.log(item.amount)
         return <span key={item.name} className="ingredient">
                     {item.name}: {item.amount}
                 </span>

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom'
 import './Auth.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
+import Spinner from '../../components/UI/Spinner/Spinner'
 import * as authActions from "../../store/actions/";
 
 class Auth extends Component {
@@ -32,7 +34,6 @@ class Auth extends Component {
 
     checkValidity = (value,rules) => {
         let isValid = true
-
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
@@ -90,8 +91,28 @@ class Auth extends Component {
                     touched={inputItem.config.touched}/>
             )
         })
+
+        if(this.props.loading) {
+            formInput = <Spinner/>
+        }
+
+        let errorMsg = null
+
+        if (this.props.error) {
+            errorMsg = (
+                <p>{this.props.error.message}</p>
+            )
+        }
+
+        let isRedirect = null
+        if (this.props.isAuth) {
+            isRedirect = <Redirect to="/"/>
+        }
+
         return (
             <div className="Auth">
+                {errorMsg}
+                {isRedirect}
                 <form onSubmit={this.submitHandler}>
                     <h2>Sign In</h2>
                     {formInput}
@@ -106,13 +127,18 @@ class Auth extends Component {
         );
     }
 }
-// const mapStateToProps = (state) => {
 
-// }
+const mapStateToProps = (state) => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+        isAuth: state.auth.token !== null
+    }
+}
 
 const mapDispatchToProp = dispatch => {
     return {
         onAuth: (email,pass, isSignUp) => dispatch(authActions.auth(email,pass,isSignUp))
     }
 }
-export default connect(null,mapDispatchToProp)(Auth);
+export default connect(mapStateToProps,mapDispatchToProp)(Auth);

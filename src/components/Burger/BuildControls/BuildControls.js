@@ -19,6 +19,7 @@ const buildControls = (props) => {
                     removed={() => props.removeIngredient(item.type)}
                     disabled={props.disabled[item.type]}/>
     })
+    
     return (
         <div className="buildControls">
             <p>Price: {props.price.toFixed(2)}</p>
@@ -27,7 +28,7 @@ const buildControls = (props) => {
                 className="OrderButton" 
                 disabled={!props.purchasable}
                 onClick={props.ordered}>
-                Order Now
+                {props.isAuth ? 'Order Now' : 'Sign Up To Order'}
             </button>
         </div>
     );

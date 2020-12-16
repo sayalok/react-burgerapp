@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import Aux from '../../hoc/Aux/Aux'
+
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Spinner from '../../components/UI/Spinner/Spinner'
+
+import Aux from '../../hoc/Aux/Aux'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+
 import axios from '../../axios-order'
+
 import * as burgerBuilderActions from '../../store/actions/'
 
 class BurgerBuilder extends Component {
     state = {
-        // ingredients: null,
-        // price: 4,
-        // purchasable: false,
         purchasing: false,
         loading: false,
-        // error: false
     }
 
     componentDidMount() {
         this.props.onInitIngredient()
-    //     axios.get("/ingredients.json")
-    //         .then(result => {
-    //             this.setState({ingredients: result.data})
-    //         })
-    //         .catch(error => {
-    //             this.setState({error: true})
-    //         })
     }
 
     updatePurchaseState = (ingredients) => {
@@ -42,32 +35,12 @@ class BurgerBuilder extends Component {
                                 })
         return sumOfIngredients > 0
     }
-
-    /*
-    addIngredientHandler = (type) => {
-        const updatedCount = this.state.ingredients[type] + 1;
-        const updatedIngredients = {...this.state.ingredients}
-        updatedIngredients[type] = updatedCount
-        const updatedPrice = this.state.price + INGREDIENTS_PRICES[type]
-        this.setState({ingredients: updatedIngredients, price: updatedPrice})
-        this.updatePurchaseState(updatedIngredients)
-    }
-    
-    removeIngredientHandler = (type) => {
-        const oldCount = this.state.ingredients[type]
-        if(oldCount <= 0) {
-            return
-        }
-        const updatedCount = oldCount - 1;
-        const updatedIngredients = {...this.state.ingredients}
-        updatedIngredients[type] = updatedCount
-        const updatedPrice = this.state.price - INGREDIENTS_PRICES[type]
-        this.setState({ingredients: updatedIngredients, price: updatedPrice})
-        this.updatePurchaseState(updatedIngredients)
-    }
-    */
     purchaseHandler = () => {
-        this.setState({purchasing: true})
+        if(this.props.isAuth) {
+            this.setState({purchasing: true})
+        }else{
+            this.props.history.push('/auth')
+        }
     }
 
     purchaseClosedHandler = () => {
@@ -75,17 +48,6 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        // const queryParams = []
-        // for (let i in this.state.ingredients) {
-        //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
-        // }
-
-        // queryParams.push('price='+ this.state.price)
-        // const queryString = queryParams.join('&')
-        // this.props.history.push({
-        //     pathname: '/checkout',
-        //     search: '?' + queryString
-        // })
         this.props.history.push('/checkout')
     }
 
@@ -106,7 +68,8 @@ class BurgerBuilder extends Component {
                         disabled={disableInfo}
                         purchasable={this.updatePurchaseState(this.props.ings)}
                         price={this.props.price}
-                        ordered={this.purchaseHandler}/>
+                        ordered={this.purchaseHandler}
+                        isAuth={this.props.isAuth}/>
                 </Aux>
             )
 
@@ -133,7 +96,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.price,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuth: state.auth.token !== null
     }
 }
 const mapDispatchToProps = dispatch => {

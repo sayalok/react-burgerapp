@@ -10,40 +10,29 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 class Orders extends Component {
 
     state = {
-        orders: [],
         loading: true
 
     }
     componentDidMount() {
-        this.props.onFetchOrders()
-    //     axios.get('/orders.json')
-    //         .then(result => {
-    //             const fetchResult = []
-    //             for (const key in result.data) {
-    //                 fetchResult.push({
-    //                     ...result.data[key],
-    //                     id:key
-    //                 })
-    //             }
-    //             this.setState({loading:false,orders:fetchResult})
-    //         })
-    //         .catch(error => {
-    //             this.setState({loading:false})
-    //         })
+        this.props.onFetchOrders(this.props.token)
     }
 
     render() {
         let orders = <Spinner/>
         if (!this.props.loading) {
-            orders = (
-                this.props.orders.map(item => (
-                    <Order 
-                        key={item.id}
-                        ingredients={item.ingredients}
-                        price={+item.price}
-                    />
-                ))
-            )
+            if (this.props.orders.length > 0) {
+                orders = (
+                    this.props.orders.map(item => (
+                        <Order 
+                            key={item.id}
+                            ingredients={item.ingredients}
+                            price={+item.price}
+                        />
+                    ))
+                )
+            }else{
+                orders = "No Order Found"
+            }
         }
         return (
             <div>
@@ -56,13 +45,14 @@ class Orders extends Component {
 const mapStateToProps = (state) => {
     return {
         orders: state.order.orders,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch(orderActions.fetchOrders())
+        onFetchOrders: (token) => dispatch(orderActions.fetchOrders(token))
     }
 }
 
