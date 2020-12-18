@@ -13,7 +13,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 import axios from '../../axios-order'
 
-import * as burgerBuilderActions from '../../store/actions/'
+import * as actions from '../../store/actions/'
 
 class BurgerBuilder extends Component {
     state = {
@@ -39,6 +39,7 @@ class BurgerBuilder extends Component {
         if(this.props.isAuth) {
             this.setState({purchasing: true})
         }else{
+            this.props.onSetRedirect('/checkout');
             this.props.history.push('/auth')
         }
     }
@@ -102,10 +103,10 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: ingName => dispatch(burgerBuilderActions.addIngredients(ingName)),
-        onIngredientRemoved: ingName => dispatch(burgerBuilderActions.removeIngredients(ingName)),
-        onInitIngredient: () => dispatch(burgerBuilderActions.initIngredient())
-
+        onIngredientAdded: ingName => dispatch(actions.addIngredients(ingName)),
+        onIngredientRemoved: ingName => dispatch(actions.removeIngredients(ingName)),
+        onInitIngredient: () => dispatch(actions.initIngredient()),
+        onSetRedirect: (path) => dispatch(actions.setAuthRedirect(path))
     }
 }
 
