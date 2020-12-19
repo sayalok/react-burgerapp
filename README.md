@@ -1,6 +1,15 @@
 ## Buger Builder App
 This is just burger builder app created for learning purpose
-More details about this project will be added after finishing the project
+
+#Feature
+* Authentication By Firebase
+* Build and Buy Burger
+
+#Technology
+* React
+* Redux
+* Redux Thunk
+* Firebase
 
 ## To run this app do the following step:
 

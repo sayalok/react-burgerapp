@@ -3,7 +3,6 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 import './NavigationItems.css'
 
 const NavigationItems = (props) => {
-    console.log(props.isAuth);
     return (
         <ul className="NavigationItems">
             <NavigationItem link="/" exact>Home</NavigationItem>
